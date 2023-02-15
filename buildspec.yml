@@ -1,0 +1,12 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      -echo ${DOCKERHUB_TOKEN} | dokcer login -u ${DOCKERHUM_USER} --password-stdin
+  build:
+    commands:
+      - docker build -t aws-code-build:latest .
+  post_build:
+    commands:
+      - docker tag aws-code-build:latest ${DOCKERHUM_USER}/aws-code-build:latest
+      - docker push ${DOCKERHUM_USER}/aws-code-build:latest
