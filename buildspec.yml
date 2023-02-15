@@ -5,6 +5,8 @@ phases:
       - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUM_USER} --password-stdin
   build:
     commands:
+      - echo "running mvn install"
+      - mvn clean install
       - docker build -t aws-code-build:latest .
   post_build:
     commands:
