@@ -7,8 +7,8 @@ phases:
     commands:
       - echo "running mvn install"
       - mvn clean install
-      - docker build -t aws-code-build:latest .
+      - docker build -t aws-code-pipeline:$CODEBUILD_BUILD_NUMBER .
   post_build:
     commands:
-      - docker tag aws-code-build:latest ${DOCKERHUM_USER}/aws-code-build:latest
-      - docker push ${DOCKERHUM_USER}/aws-code-build:latest
+      - docker tag aws-code-pipeline:$CODEBUILD_BUILD_NUMBER ${DOCKERHUM_USER}/aws-code-pipeline:$CODEBUILD_BUILD_NUMBER
+      - docker push ${DOCKERHUM_USER}/aws-code-pipeline:$CODEBUILD_BUILD_NUMBER
