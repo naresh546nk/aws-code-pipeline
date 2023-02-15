@@ -5,20 +5,24 @@ env:
 phases:
   pre_build:
     commands:
-      #Docker Hub login
-      - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUM_USER} --password-stdin
-      # ECR login
-      - REPOSITORY_URI=796731763832.dkr.ecr.ap-south-1.amazonaws.com
-      - aws ecr get-login-password --region ${AWS_REGION} | docker login -u AWS --password-stdin ${REPOSITORY_URI}
-      - ECR_IMAGE_URI="${REPOSITORY_URI}/${ECR_REPO_NAME}:latest-${CODEBUILD_BUILD_NUMBER}"
+#      #Docker Hub login
+#      - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUM_USER} --password-stdin
+#      # ECR login
+#      - REPOSITORY_URI=796731763832.dkr.ecr.ap-south-1.amazonaws.com
+#      - aws ecr get-login-password --region ${AWS_REGION} | docker login -u AWS --password-stdin ${REPOSITORY_URI}
+#      - ECR_IMAGE_URI="${REPOSITORY_URI}/${ECR_REPO_NAME}:latest-${CODEBUILD_BUILD_NUMBER}"
 
 
   build:
     commands:
       - echo "running mvn install"
       - mvn clean install
-      - docker build -t aws-code-pipeline:latest .
+#      - docker build -t aws-code-pipeline:latest .
   post_build:
     commands:
-      - docker tag aws-code-pipeline:latest ${ECR_IMAGE_URI}
-      - docker push ${ECR_IMAGE_URI}
+#      - docker tag aws-code-pipeline:latest ${ECR_IMAGE_URI}
+#      - docker push ${ECR_IMAGE_URI}
+artifacts:
+  files:
+    - target/aws-code-pipeline.jar
+  discard-paths: yes
