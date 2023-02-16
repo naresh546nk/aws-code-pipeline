@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/")
     public String home(){
-        return  "Application is running fine version: 1" ;
+        return  "Application is running fine version: 1";
     }
 
     @GetMapping("/users")
