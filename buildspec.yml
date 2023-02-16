@@ -10,7 +10,7 @@ phases:
       # ECR login
       - REPOSITORY_URI=796731763832.dkr.ecr.ap-south-1.amazonaws.com
       - aws ecr get-login-password --region ${AWS_REGION} | docker login -u AWS --password-stdin ${REPOSITORY_URI}
-      - ECR_IMAGE_URI="${REPOSITORY_URI}/${ECR_REPO_NAME}:latest-${CODEBUILD_BUILD_NUMBER}"
+      - ECR_IMAGE_URI="${REPOSITORY_URI}/${ECR_REPO_NAME}:latest"
 
 
   build:
