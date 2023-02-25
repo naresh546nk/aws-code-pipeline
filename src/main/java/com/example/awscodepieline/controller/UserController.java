@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -21,8 +23,11 @@ public class UserController {
 
 
     @GetMapping("/")
-    public String home(){
-        return  "Application is running fine version: 1";
+    public Map<String,String> home(){
+        Optional<String> hostname = Optional.ofNullable(System.getenv("HOSTNAME"));
+        return  Map.of("status", "Application is running fine" ,
+                "Host", hostname.get(),
+                 "Version", "Version : "+3);
     }
 
     @GetMapping("/users")

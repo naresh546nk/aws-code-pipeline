@@ -20,11 +20,16 @@ phases:
       - docker build -t aws-code-pipeline:latest .
   post_build:
     commands:
+      - DOCKER_IMAGE_URI="naresh546/aws-code-pipeline:${CODEBUILD_RESOLVED_SOURCE_VERSION:0:8}"
+      - echo ${DOCKER_IMAGE_URI}
       - docker tag aws-code-pipeline:latest naresh546/aws-code-pipeline:${CODEBUILD_RESOLVED_SOURCE_VERSION:0:8}
       - docker push naresh546/aws-code-pipeline:${CODEBUILD_RESOLVED_SOURCE_VERSION:0:8}
 #      - docker tag aws-code-pipeline:latest ${ECR_IMAGE_URI}
 #      - docker push ${ECR_IMAGE_URI}
-#artifacts:
-#  files:
+      #Generatie image definitions file for ECS
+      - printf '[{"name":"docker-container", "imageUri":"%s"}]' ${DOCKER_IMAGE_URI} > imagedefinitions.json
+artifacts:
+  files:
+    - imagedefinitions.json
 #    - target/aws-code-pipeline.jar
 #  discard-paths: yes
